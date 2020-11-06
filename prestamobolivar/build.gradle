@@ -1,0 +1,32 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.segurosbolivar'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc8'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	
+	// Need this in order to get the HikariCPConnectionProvider
+       compile('org.hibernate:hibernate-hikaricp:5.2.11.Final') {
+           exclude group: 'com.zaxxer', module: 'HikariCP'
+           exclude group: 'org.hibernate', module: 'hibernate-core'
+       }
+}
+
+test {
+	useJUnitPlatform()
+}
